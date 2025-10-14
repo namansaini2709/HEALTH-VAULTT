@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Progress } from '@/components/ui/progress';
-import { Upload, QrCode, FileText, Calendar, LogOut, Plus, User, Settings, Bell, Activity, Heart, Shield, Smartphone, Edit, Lock, Unlock } from 'lucide-react';
+import { Upload, QrCode, FileText, Calendar, LogOut, Plus, User, Settings, Bell, Activity, Heart, Shield, Smartphone, Edit, Lock, Unlock, MapPin } from 'lucide-react';
 import { HealthVaultService, Patient, MedicalRecord } from '@/lib/healthVault';
 import { AISummarizer } from '@/lib/aiSummarizer';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +15,7 @@ import QRGenerator from '@/components/QRGenerator';
 import PatientHealthSummary from '@/components/PatientHealthSummary';
 import EncryptedRecordSummary from '@/components/EncryptedRecordSummary';
 import AccessManagement from '@/components/AccessManagement';
+import AppointmentsTab from '@/components/AppointmentsTab';
 import { createEncryptedFile, generateEncryptionKey, keyToHexString, storeKeyInSession } from '@/lib/encryptionUtils';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { extractPDFText } from '@/lib/pdfExtractor';
@@ -264,7 +265,12 @@ export default function PatientDashboard() {
                 </Avatar>
                 <div className="flex-1">
                   <h2 className="text-xl font-semibold">{patient.name}</h2>
-                  <p className="text-blue-100 text-sm">Patient ID: {patient.id.slice(-8)}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-blue-100 text-sm">Patient ID: {patient.id.slice(-8)}</p>
+                    <Badge variant={patient.plan === 'premium' ? 'default' : 'secondary'} className={patient.plan === 'premium' ? 'bg-gradient-to-r from-yellow-600 to-orange-500' : ''}>
+                      {patient.plan.charAt(0).toUpperCase() + patient.plan.slice(1)}
+                    </Badge>
+                  </div>
                   <div className="mt-2">
                     <div className="flex items-center justify-between text-sm">
                       <span>Profile Complete</span>
@@ -335,10 +341,16 @@ export default function PatientDashboard() {
 
             {/* Main Tabs */}
             <Tabs defaultValue="overview" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 mb-6">
+              <TabsList className={`grid w-full ${patient.plan === 'premium' ? 'grid-cols-5' : 'grid-cols-4'} mb-6`}>
                 <TabsTrigger value="overview" className="text-xs sm:text-sm">Overview</TabsTrigger>
                 <TabsTrigger value="records" className="text-xs sm:text-sm">Records</TabsTrigger>
                 <TabsTrigger value="insights" className="text-xs sm:text-sm">AI Insights</TabsTrigger>
+                {patient.plan === 'premium' && (
+                  <TabsTrigger value="appointments" className="text-xs sm:text-sm">
+                    <Calendar className="h-3 w-3 mr-1" />
+                    Appointments
+                  </TabsTrigger>
+                )}
                 <TabsTrigger value="access" className="text-xs sm:text-sm">
                   <Shield className="h-3 w-3 mr-1" />
                   Access
@@ -438,6 +450,12 @@ export default function PatientDashboard() {
                 <PatientHealthSummary records={records} onReload={refreshPatientData} />
               </TabsContent>
 
+              {patient.plan === 'premium' && (
+                <TabsContent value="appointments">
+                  <AppointmentsTab patientId={patient.id} />
+                </TabsContent>
+              )}
+
               <TabsContent value="access">
                 <AccessManagement patientId={patient.id} />
               </TabsContent>
@@ -456,7 +474,12 @@ export default function PatientDashboard() {
                   </AvatarFallback>
                 </Avatar>
                 <CardTitle className="text-lg">{patient.name}</CardTitle>
-                <CardDescription>Patient ID: {patient.id.slice(-8)}</CardDescription>
+                <div className="flex items-center justify-center gap-2">
+                  <CardDescription className="!m-0">Patient ID: {patient.id.slice(-8)}</CardDescription>
+                  <Badge variant={patient.plan === 'premium' ? 'default' : 'secondary'} className={patient.plan === 'premium' ? 'bg-gradient-to-r from-yellow-600 to-orange-500' : ''}>
+                    {patient.plan.charAt(0).toUpperCase() + patient.plan.slice(1)}
+                  </Badge>
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>

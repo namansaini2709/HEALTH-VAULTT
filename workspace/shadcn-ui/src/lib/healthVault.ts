@@ -33,6 +33,7 @@ export interface Patient {
   emergencyContact: string;
   profilePictureUrl?: string;
   qrCode: string;
+  plan: 'basic' | 'premium'; // Add plan field
   records: MedicalRecord[];
   createdAt: string;
 }
