@@ -26,12 +26,46 @@ The application consists of:
 2. Set the environment variable `VITE_API_BASE_URL` to point to your deployed backend API
 3. Example: `VITE_API_BASE_URL=https://your-backend-deployment-url.com/api`
 
-### Backend (to Heroku/Render/Railway)
-1. The backend needs to be deployed separately to a service that supports Node.js applications
-2. Set the environment variables:
+### Backend (to Heroku)
+#### Manual Deployment:
+1. Make sure you have the Heroku CLI installed
+2. Navigate to the `backend` directory
+3. Login to Heroku: `heroku login`
+4. Create a new Heroku app: `heroku create your-app-name`
+5. Set environment variables:
+   ```bash
+   heroku config:set MONGODB_URI=your_mongodb_connection_string
+   heroku config:set JWT_SECRET=your_jwt_secret
+   heroku config:set GEMINI_API_KEY=your_gemini_api_key
+   ```
+6. Deploy: `git push heroku main` or `git push heroku v2.0:main`
+
+#### Automatic Deployment via GitHub:
+1. Connect your GitHub repository to Heroku
+2. Go to your Heroku dashboard
+3. Create a new app
+4. Under the "Deploy" tab, connect to GitHub
+5. Search for your repository (`namansaini2709/HEALTH-VAULTT`)
+6. Enable automatic deploys for the `v2.0` branch
+7. Go to the "Settings" tab and add the following Config Vars:
    - `MONGODB_URI`: Your MongoDB connection string
    - `JWT_SECRET`: Secret for JWT token generation
    - `GEMINI_API_KEY`: Google Gemini API key for AI summarization
+8. Click "Deploy Branch"
+
+### Backend (Alternative Platforms)
+#### Render:
+1. Create account at Render.com
+2. Create a new "Web Service"
+3. Connect to your GitHub repository
+4. Set the environment variables in Render dashboard
+5. Use the `backend` directory as the root
+
+#### Railway:
+1. Create account at Railway.app
+2. Create a new project from GitHub
+3. Set environment variables in the dashboard
+4. Deploy service
 
 ## Environment Variables
 
@@ -39,9 +73,9 @@ The application consists of:
 - `VITE_API_BASE_URL`: URL of the backend API
 
 ### Backend (backend/.env)
-- `MONGODB_URI`: MongoDB connection string
-- `JWT_SECRET`: JWT secret key
-- `GEMINI_API_KEY`: Google Gemini API key
+- `MONGODB_URI`: MongoDB connection string (e.g., from MongoDB Atlas)
+- `JWT_SECRET`: JWT secret key (use a strong random string)
+- `GEMINI_API_KEY`: Google Gemini API key for AI summarization
 
 ## Technologies Used
 
