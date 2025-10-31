@@ -17,7 +17,7 @@ require('dotenv').config();
 const app = express();
 
 // Create uploads directory if it doesn't exist
-const uploadDir = 'uploads';
+const uploadDir = '/tmp/uploads';
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
@@ -1460,10 +1460,6 @@ app.get('/api/access-requests/doctor/:doctorId/patient/:patientId/keys/:recordId
 });
 
 // Serve static files
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static('/tmp/uploads'));
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+module.exports = app;

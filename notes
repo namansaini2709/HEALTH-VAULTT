@@ -1,3 +1,19 @@
-i just want two things from you right now 
-in the proile information i want you to add a feature that shows the plan of the user which is either basic or premium and i want you to make  Patient ID: 2696c85e as premium
-in the premium plan and only in the premium plan i want you to create a tab along with overview records ai insights with the name of "appointments" and i want you to create some fake data of the doctors according to my current location add a feature of geolocation or adding your own location "DR AKHILESH DAS GUPTA INSTITUTE OF PROFESSIONAL STUDIES" add fake data which should look believable
+Encryption Model
+   - AES-GCM (Advanced Encryption Standard - Galois/Counter Mode) with 256-bit keys
+   - Client-side encryption using Web Crypto API before files are uploaded
+   - End-to-end encryption where files are encrypted in the browser before being sent to the server
+   - Separate encryption keys stored and shared with authorized doctors through the access control system
+   - Session-based key management for temporary access
+
+  Tech Stack
+   - Frontend: React with TypeScript, Vite build tool
+   - UI Components: shadcn/ui with Tailwind CSS
+   - Styling: Tailwind CSS with dark/light theme support
+   - Backend: Node.js with Express.js
+   - Database: MongoDB with Mongoose ODM
+   - File Storage: Local file system (uploads directory)
+   - Authentication: JWT tokens with bcrypt for password hashing
+   - API Communication: Axios for HTTP requests
+   - State Management: React hooks and localStorage for session management
+   - Build Tools: pnpm (as specified in package.json)
+   - Additional APIs: Google Gemini AI for medical record analysis
