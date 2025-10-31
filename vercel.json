@@ -20,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/workspace/shadcn-ui/dist/index.html"
+      "dest": "/index.html"
     }
   ]
 }
